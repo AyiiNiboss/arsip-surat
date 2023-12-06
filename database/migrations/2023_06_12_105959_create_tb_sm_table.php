@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('tb_sm', function (Blueprint $table) {
+            $table->id();
+            $table->string('no_agenda');
+            $table->string('no_surat');
+            $table->date('tgl_surat');
+            $table->date('tgl_diterima');
+            $table->string('pengirim');
+            $table->string('perihal');
+            $table->enum('lampiran', ['1 Lampiran', '2 Lampiran', '3 Lampiran','4 Lampiran','5 Lampiran','6 Lampiran']);
+            $table->enum('status', ['Asli', 'Tembusan']);
+            $table->enum('sifat', ['segera', 'sangat segera']);
+            $table->string('file')->nullable();
+            $table->string('catatan')->nullable();
+            $table->unsignedBigInteger('bagian_id')->nullable();
+            $table->foreign('bagian_id')->references('id')->on('tb_bagian');
+            $table->date('tgl_disposisi')->nullable();
+            $table->date('tgl_arsip')->nullable();
+            $table->enum('aktivitas', ['1','2','3','4','5']);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('tb_sm');
+    }
+};
